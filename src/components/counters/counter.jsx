@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import useOnClickOutside from '../../hooks/outSideClick';
 const Counter = () => {
 
@@ -6,8 +6,6 @@ const Counter = () => {
     const [timerRunning, setTimerRunning] = useState(false);
 
     const wrapperRef = useRef(null);
-
-
     console.log('Rendring')
 
     const startTimer = () => {
@@ -29,7 +27,6 @@ const Counter = () => {
                 timerRunning ?
                     <>
                         <h1>Check console for how many time component re-render</h1>
-
                         <p> {time}</p>
                     </>
                     : (

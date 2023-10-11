@@ -5,20 +5,42 @@ import { useEffect, useState } from 'react'
 
 const Balance = () => {
 
-    const [tokenBalance, setTokenBalance] = useState('')
 
+    const [balance, setBalance] = useState('')
     const { address } = useAccount()
 
-    useEffect( async () => {
-        const balance = await fetchBalance({
-            address: address,
-            token: '0x9bfd1348cf574e3eb2b114cc18374b09ad012c69',
-        })
-        setTokenBalance(balance)
+    useEffect(() => {
+        if (address) {
+
+            const balanceCall = async () => { try {
+                let balanceRes = await fetchBalance({
+                    address: address,
+                    token: '0x9bfd1348cf574e3eb2b114cc18374b09ad012c69',
+                })
+                setBalance(balanceRes)
+            } catch (err) {
+                console.log('err')
+                console.log(err)
+            }
+
+            }
+            
+            balanceCall()
+        } else {
+            alert('please connect wallet')
+        }
     }, []);
+
+
     return (
         <div>
-            {`Balance(${tokenBalance.symbol}): ${tokenBalance.formatted}`}
+            {balance ?
+                <>
+                    {`Balance(${balance?.symbol}): ${balance?.formatted}`}
+                </>
+                :
+                "Wallet not connected"
+            }
         </div>
     )
 }
